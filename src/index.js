@@ -1,12 +1,14 @@
 import { ApolloServer } from 'apollo-server-express'
 import express from 'express'
 import mongoose from 'mongoose'
-
-import { resolvers } from './resolvers.js'
-import { typeDefs } from './typeDefs.js'
 import expressJwt from 'express-jwt'
 import dotenv from 'dotenv'
-import { mergeResolvers } from '@graphql-tools/merge'
+import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge'
+
+import { userResolvers } from './resolvers/userResolvers.js'
+import { userTypeDefs } from './typeDefs/userTypeDefs.js'
+import { productTypeDefs } from './typeDefs/productTypeDefs.js'
+import { productResolvers } from './resolvers/productResolvers.js'
 
 dotenv.config()
 const app = express()
@@ -27,8 +29,8 @@ const startServer = async () => {
   })
 
   const server = new ApolloServer({
-    typeDefs,
-    resolvers: mergeResolvers([resolvers]),
+    typeDefs: mergeTypeDefs([userTypeDefs, productTypeDefs]),
+    resolvers: mergeResolvers([userResolvers, productResolvers]),
     context: ({ req, res }) => {
       const token = req.headers.authorization || ''
       const user = req.user || null

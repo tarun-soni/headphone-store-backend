@@ -1,9 +1,9 @@
-import { User } from './models/User.js'
+import { User } from '../models/User.js'
 import bcrypt from 'bcryptjs'
-import generateToken from './utils/generateToken.js'
+import generateToken from '../utils/generateToken.js'
 import { AuthenticationError } from 'apollo-server-errors'
 
-export const resolvers = {
+export const userResolvers = {
   Query: {
     // get every users data
     // auth, admin only

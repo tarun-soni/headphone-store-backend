@@ -1,12 +1,14 @@
 import { gql } from 'apollo-server-core'
 
-export const typeDefs = gql`
-  "all querys here"
+export const userTypeDefs = gql`
+  "---all querys here---"
   type Query {
+    "user queries"
     getAllUser: [User!]!
     getSingleUser(id: ID!): User
     getCurrentUser: User!
   }
+
   "user schema type"
   type User {
     _id: ID
@@ -16,8 +18,9 @@ export const typeDefs = gql`
     isAdmin: Boolean
   }
 
-  "all mutations"
+  "---all mutations here---"
   type Mutation {
+    "register or create user"
     createUser(
       name: String!
       email: String!
