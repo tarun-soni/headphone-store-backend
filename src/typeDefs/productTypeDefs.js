@@ -5,7 +5,8 @@ export const productTypeDefs = gql`
   type Query {
     "product queries"
     getAllProducts: [Product!]!
-    getSingleProduct(id: ID!): Product
+    getSingleProduct(id: ID!): Product!
+    getTopRatedProducts: [Product!]!
   }
 
   "product schema type"
@@ -29,6 +30,13 @@ export const productTypeDefs = gql`
     BLACK
     YELLOW
   }
+
+  "delete return object"
+  type deleteResponse {
+    status: String!
+    message: String!
+  }
+
   "---all mutations here---"
   type Mutation {
     createProduct(
@@ -41,5 +49,7 @@ export const productTypeDefs = gql`
       countInStock: Int
       colors: [COLORSENUM!]
     ): Product!
+    "delete product returns message success or failed"
+    deleteProduct(id: ID): deleteResponse!
   }
 `
