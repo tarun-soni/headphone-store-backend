@@ -22,7 +22,7 @@ export const userResolvers = {
 
     // get any other users data  by id
     // auth, admin only
-    getSingleUser(_, args, context, info) {
+    getSingleUser: async (_, args, context, info) => {
       if (!args) throw new AuthenticationError(`NO args passed`)
 
       if (!context || !context.user) {
@@ -32,7 +32,8 @@ export const userResolvers = {
           user: { isAdmin }
         } = context.user
 
-        if (isAdmin === true) return User.findById(args.id).select('-password')
+        if (isAdmin === true)
+          return await User.findById(args.id).select('-password')
         else throw new AuthenticationError(`You are not and ADMIN`)
       }
     },

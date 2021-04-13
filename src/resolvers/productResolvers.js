@@ -3,8 +3,34 @@ import Product from '../models/Product.js'
 
 export const productResolvers = {
   // All product query definations
-  Query: {},
+  Query: {
+    // get all products
+    // auth, admin only
+    getAllProducts: async (_, __, context) => {
+      if (!context || !context.user) {
+        throw new AuthenticationError(`No token`)
+      } else {
+        const {
+          user: { isAdmin }
+        } = context.user
 
+        if (isAdmin === true) return Product.find()
+        else throw new AuthenticationError(`You are not and ADMIN`)
+      }
+    },
+
+    // get one product by ID
+    // auth only
+    getSingleProduct: async (_, args, context) => {
+      if (!args) throw new AuthenticationError(`NO args passed`)
+
+      if (!context || !context.user) {
+        throw new AuthenticationError(`No token`)
+      } else {
+        return await Product.findById(args.id)
+      }
+    }
+  },
   // All mutation definations
   Mutation: {
     createProduct: async (_, args, context) => {
