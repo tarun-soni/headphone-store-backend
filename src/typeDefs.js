@@ -4,8 +4,8 @@ export const typeDefs = gql`
   "all querys here"
   type Query {
     getAllUser: [User!]!
-    user(id: ID!): User
-    viewer: User!
+    getSingleUser(id: ID!): User
+    getCurrentUser: User!
   }
   "user schema type"
   type User {

@@ -7,15 +7,19 @@ import { AuthenticationError } from 'apollo-server-errors'
 export const resolvers = {
   Query: {
     getAllUser: () => User.find(),
-    user(parent, args, context, info) {
+    getSingleUser(_, args, context, info) {
+      if (!args) throw new AuthenticationError(`NO args passed`)
       return User.findById(args.id)
     },
 
-    viewer(parent, args, { user }) {
-      return User.find(({ id }) => id === User.sub)
+    getCurrentUser(_, __, context) {
+      if (!context || !context.user) {
+        throw new AuthenticationError(`NO token`)
+      }
+      // return User.findById(args.id).select('-password')
+      return User.findById(context.user.id).select('-password')
     }
   },
-
   // all mutation definations
   Mutation: {
     // parent, args, context
@@ -34,13 +38,12 @@ export const resolvers = {
         roles,
         permissions
       })
-
       await user.save()
       return user
     },
 
     // login mutation
-    login: async (parent, { email, password }) => {
+    login: async (parent, { email, password }, context) => {
       try {
         const user = await User.findOne({ email })
         if (user && (await bcrypt.compare(password, user.password))) {

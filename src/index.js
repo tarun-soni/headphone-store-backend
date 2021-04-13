@@ -1,4 +1,4 @@
-import { ApolloServer } from 'apollo-server-express'
+import { ApolloServer, AuthenticationError } from 'apollo-server-express'
 import express from 'express'
 import mongoose from 'mongoose'
 
@@ -12,7 +12,7 @@ const app = express()
 
 app.use(
   expressJwt({
-    secret: process.env.JWT_SECRET,
+    secret: 'testsecret',
     algorithms: ['HS256'],
     credentialsRequired: false
   })
@@ -27,15 +27,14 @@ const startServer = async () => {
 
   const server = new ApolloServer({
     typeDefs,
-    resolvers
-    // context: ({ req, res }) => {
+    resolvers,
+    context: ({ req, res }) => {
+      const token = req.headers.authorization || ''
+      const user = req.user || null
+      // if (!user) throw new AuthenticationError('you must be logged in')
 
-    //   const token = req.headers.authorization || "";
-
-    //   const user = req.user || null;
-
-    //   return { user };
-    // },
+      return { user }
+    }
   })
 
   server.applyMiddleware({ app })
