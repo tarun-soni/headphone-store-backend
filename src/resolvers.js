@@ -5,8 +5,8 @@ import { AuthenticationError } from 'apollo-server-errors'
 
 export const resolvers = {
   Query: {
-    // getAllUser: () => User.find(),
-
+    // get every users data
+    // auth, admin only
     getAllUser: async (_, __, context) => {
       if (!context || !context.user) {
         throw new AuthenticationError(`No token`)
@@ -20,11 +20,25 @@ export const resolvers = {
       }
     },
 
+    // get any other users data  by id
+    // auth, admin only
     getSingleUser(_, args, context, info) {
       if (!args) throw new AuthenticationError(`NO args passed`)
-      return User.findById(args.id)
+
+      if (!context || !context.user) {
+        throw new AuthenticationError(`No token`)
+      } else {
+        const {
+          user: { isAdmin }
+        } = context.user
+
+        if (isAdmin === true) return User.findById(args.id).select('-password')
+        else throw new AuthenticationError(`You are not and ADMIN`)
+      }
     },
 
+    // get current data
+    // auth only
     getCurrentUser: async (_, __, context) => {
       if (!context || !context.user) {
         throw new AuthenticationError(`NO token`)
