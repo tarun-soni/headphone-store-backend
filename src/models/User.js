@@ -14,8 +14,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  roles: [String],
-  permissions: [String]
+  isAdmin: {
+    type: Boolean,
+    default: false
+  }
 })
 userSchema.methods.matchPasswords = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password)

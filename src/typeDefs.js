@@ -13,8 +13,7 @@ export const typeDefs = gql`
     name: String!
     email: String!
     password: String!
-    roles: String
-    permissions: String
+    isAdmin: Boolean
   }
 
   "all mutations"
@@ -23,8 +22,7 @@ export const typeDefs = gql`
       name: String!
       email: String!
       password: String!
-      roles: String
-      permissions: String
+      isAdmin: Boolean
     ): User!
 
     "returns string bascically the jwt token"
