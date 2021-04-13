@@ -43,7 +43,6 @@ export const resolvers = {
       if (!context || !context.user) {
         throw new AuthenticationError(`NO token`)
       }
-      // return User.findById(args.id).select('-password')
       const {
         user: { _id }
       } = context.user
@@ -52,7 +51,8 @@ export const resolvers = {
       return user
     }
   },
-  // all mutation definations
+
+  // All mutation definations
   Mutation: {
     // parent, args, context
     createUser: async (_, { name, email, password, isAdmin }) => {

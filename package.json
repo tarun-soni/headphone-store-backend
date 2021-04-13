@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@graphql-tools/merge": "^6.2.11",
     "apollo-server-express": "^2.22.2",
     "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",

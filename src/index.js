@@ -1,4 +1,4 @@
-import { ApolloServer, AuthenticationError } from 'apollo-server-express'
+import { ApolloServer } from 'apollo-server-express'
 import express from 'express'
 import mongoose from 'mongoose'
 
@@ -6,6 +6,7 @@ import { resolvers } from './resolvers.js'
 import { typeDefs } from './typeDefs.js'
 import expressJwt from 'express-jwt'
 import dotenv from 'dotenv'
+import { mergeResolvers } from '@graphql-tools/merge'
 
 dotenv.config()
 const app = express()
@@ -27,7 +28,7 @@ const startServer = async () => {
 
   const server = new ApolloServer({
     typeDefs,
-    resolvers,
+    resolvers: mergeResolvers([resolvers]),
     context: ({ req, res }) => {
       const token = req.headers.authorization || ''
       const user = req.user || null
