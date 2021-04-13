@@ -14,29 +14,32 @@ export const productTypeDefs = gql`
     user: ID!
     name: String!
     image: String
-    brand: String
-    category: String
     description: String
     rating: Int
     price: Int
     countInStock: Int
+    colors: [COLORSENUM!]
   }
 
-  # type ProductUser {
-  #   _id: ID
-  # }
+  "enum for product colors"
+  enum COLORSENUM {
+    RED
+    GREEN
+    BLUE
+    BLACK
+    YELLOW
+  }
   "---all mutations here---"
   type Mutation {
     createProduct(
       user: ID!
       name: String!
       image: String
-      brand: String
-      category: String
       description: String
       rating: Int
       price: Int
       countInStock: Int
+      colors: [COLORSENUM!]
     ): Product!
   }
 `

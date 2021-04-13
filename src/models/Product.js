@@ -15,14 +15,7 @@ const productSchema = mongoose.Schema(
       type: String,
       required: true
     },
-    brand: {
-      type: String,
-      required: true
-    },
-    category: {
-      type: String,
-      required: true
-    },
+
     description: {
       type: String,
       required: true
@@ -42,7 +35,8 @@ const productSchema = mongoose.Schema(
       type: Number,
       required: true,
       default: 0
-    }
+    },
+    colors: [String]
   },
   {
     timestamps: true

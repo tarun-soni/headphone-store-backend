@@ -3,6 +3,8 @@ import express from 'express'
 import mongoose from 'mongoose'
 import expressJwt from 'express-jwt'
 import dotenv from 'dotenv'
+import cors from 'cors'
+
 import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge'
 
 import { userResolvers } from './resolvers/userResolvers.js'
@@ -12,6 +14,7 @@ import { productResolvers } from './resolvers/productResolvers.js'
 
 dotenv.config()
 const app = express()
+app.use(cors())
 
 app.use(
   expressJwt({

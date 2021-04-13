@@ -49,12 +49,12 @@ export const productResolvers = {
           user: _id,
           name: args.name,
           image: args.image,
-          brand: args.brand,
-          category: args.category,
+
           description: args.description,
           rating: args.rating,
           price: args.price,
-          countInStock: args.countInStock
+          countInStock: args.countInStock,
+          colors: args.colors
         })
         const createdProduct = await product.save()
 
