@@ -15,12 +15,6 @@ export const productResolvers = {
     getSingleProduct: async (_, args, context) => {
       if (!args) throw new AuthenticationError(`NO args passed`)
 
-      // if (!context || !context.user) {
-      //   throw new AuthenticationError(`No token`)
-      // } else {
-      //   return await Product.findById(args.id)
-      // }
-
       return await Product.findById(args.id)
     },
     // get top 5 products by rating
