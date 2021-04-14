@@ -11,15 +11,17 @@ export const productResolvers = {
     },
 
     // get one product by ID
-    // auth only
+    // everyone
     getSingleProduct: async (_, args, context) => {
       if (!args) throw new AuthenticationError(`NO args passed`)
 
-      if (!context || !context.user) {
-        throw new AuthenticationError(`No token`)
-      } else {
-        return await Product.findById(args.id)
-      }
+      // if (!context || !context.user) {
+      //   throw new AuthenticationError(`No token`)
+      // } else {
+      //   return await Product.findById(args.id)
+      // }
+
+      return await Product.findById(args.id)
     },
     // get top 5 products by rating
     // everyone
@@ -29,6 +31,8 @@ export const productResolvers = {
   },
   // All mutation definations
   Mutation: {
+    // create a new product from input
+    // admin only
     createProduct: async (_, args, context) => {
       if (!context || !context.user) {
         throw new AuthenticationError(`No token`)
@@ -58,8 +62,8 @@ export const productResolvers = {
       }
     },
 
-    //
-    //
+    // deletes a product from listing using id
+    // amdin only
     deleteProduct: async (_, args, context) => {
       if (!context || !context.user) {
         throw new AuthenticationError(`No token`)

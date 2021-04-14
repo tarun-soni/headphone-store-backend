@@ -39,6 +39,7 @@ export const productTypeDefs = gql`
 
   "---all mutations here---"
   type Mutation {
+    "creates a product from the userdata"
     createProduct(
       user: ID!
       name: String!
@@ -49,6 +50,7 @@ export const productTypeDefs = gql`
       countInStock: Int
       colors: [COLORSENUM!]
     ): Product!
+
     "delete product returns message success or failed"
     deleteProduct(id: ID): deleteResponse!
   }
