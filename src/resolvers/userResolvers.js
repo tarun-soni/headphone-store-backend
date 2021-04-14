@@ -78,10 +78,19 @@ export const userResolvers = {
     login: async (_, { email, password }, context) => {
       try {
         const user = await User.findOne({ email })
+
         const userWOpass = await User.findOne({ email }).select('-password')
         if (user && (await bcrypt.compare(password, user.password))) {
           const token = generateToken(userWOpass)
-          return token
+
+          const userToReturn = {
+            _id: userWOpass._id,
+            name: userWOpass.name,
+            email: userWOpass.email,
+            isAdmin: userWOpass.isAdmin,
+            token: token
+          }
+          return userToReturn
         } else {
           throw new AuthenticationError(`INVALID CREDS`)
         }
