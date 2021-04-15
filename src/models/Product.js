@@ -15,6 +15,9 @@ const productSchema = mongoose.Schema(
       type: String,
       required: true
     },
+    bgimage: {
+      type: String
+    },
 
     description: {
       type: String,

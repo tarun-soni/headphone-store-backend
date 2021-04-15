@@ -15,6 +15,7 @@ export const productTypeDefs = gql`
     user: ID!
     name: String!
     image: String
+    bgimage: String
     description: String
     rating: Int
     price: Int
@@ -44,6 +45,7 @@ export const productTypeDefs = gql`
       user: ID!
       name: String!
       image: String
+      bgimage: String
       description: String
       rating: Int
       price: Int
@@ -59,6 +61,7 @@ export const productTypeDefs = gql`
       user: ID!
       name: String!
       image: String
+      bgimage: String
       description: String
       rating: Int
       price: Int

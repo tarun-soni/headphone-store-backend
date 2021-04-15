@@ -43,6 +43,7 @@ export const productResolvers = {
           user: _id,
           name: args.name,
           image: args.image,
+          bgimage: args.bgimage,
 
           description: args.description,
           rating: args.rating,
@@ -75,6 +76,7 @@ export const productResolvers = {
           product.user = args.user
           product.name = args.name
           product.image = args.image
+          product.bgimage = args.bgimage
           product.rating = args.rating
           product.description = args.description
           product.price = args.price
