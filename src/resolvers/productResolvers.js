@@ -55,6 +55,36 @@ export const productResolvers = {
         return createdProduct
       }
     },
+    // update a product from productId
+    // admin only
+    updateProduct: async (_, args, context) => {
+      if (!context || !context.user) {
+        throw new AuthenticationError(`No token`)
+      } else {
+        const {
+          user: { _id, isAdmin }
+        } = context.user
+
+        if (!isAdmin) {
+          throw new AuthenticationError(`You are not an ADMIN`)
+        }
+
+        const product = await Product.findById(args.productId)
+
+        if (product) {
+          product.user = args.user
+          product.name = args.name
+          product.image = args.image
+          product.rating = args.rating
+          product.description = args.description
+          product.price = args.price
+          product.countInStock = args.countInStock
+          product.colors = args.colors
+        }
+        const updatedProduct = await product.save()
+        return updatedProduct
+      }
+    },
 
     // deletes a product from listing using id
     // amdin only

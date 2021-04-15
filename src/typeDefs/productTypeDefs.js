@@ -53,5 +53,17 @@ export const productTypeDefs = gql`
 
     "delete product returns message success or failed"
     deleteProduct(id: ID): deleteResponse!
+    ""
+    updateProduct(
+      productId: ID!
+      user: ID!
+      name: String!
+      image: String
+      description: String
+      rating: Int
+      price: Int
+      countInStock: Int
+      colors: [COLORSENUM!]
+    ): Product!
   }
 `
