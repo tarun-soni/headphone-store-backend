@@ -30,6 +30,7 @@ export const productTypeDefs = gql`
     BLUE
     BLACK
     YELLOW
+    WHITE
   }
 
   "delete return object"

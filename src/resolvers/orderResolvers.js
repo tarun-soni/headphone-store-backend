@@ -14,28 +14,23 @@ export const orderResolvers = {
     name: 'Date',
     description: 'Date custom scalar type',
     serialize(value) {
-      return dayjs(value).format('DD-MM-YYYY') // Convert outgoing Date to integer for JSON
+      return dayjs(value).format('DD-MM-YYYY')
     },
     parseValue(value) {
-      return dayjs(value) // Convert incoming integer to Date
+      return dayjs(value)
     },
     parseLiteral(ast) {
-      console.log(`ast.value`, ast.value)
-      console.log(`ast.kind`, ast.kind)
-      console.log(`KIND.STRING`, Kind.STRING)
-
       if (ast.kind === Kind.STRING) {
-        console.log(`dayjs(ast.value)`, dayjs(ast.value))
-        return dayjs(ast.value) // Convert hard-coded AST string to integer and then to Date
+        return dayjs(ast.value)
       } else {
-        return null // Invalid hard-coded value (not an integer)
+        return null
       }
     }
   }),
 
   Mutation: {
-    // create a new product from input
-    // admin only
+    // create a new order from input
+    // auth only
     createOrder: async (_, args, context) => {
       const {
         userId,
@@ -48,8 +43,6 @@ export const orderResolvers = {
         isDelivered
       } = args
 
-      console.log(`paidAt`, dayjs(paidAt))
-      console.log(`deliveredAt`, dayjs(deliveredAt))
       if (orderItems && orderItems.length === 0) {
         throw new UserInputError('No order items')
       } else {
