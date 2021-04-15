@@ -9,8 +9,10 @@ import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge'
 import { userResolvers } from './resolvers/userResolvers.js'
 import { userTypeDefs } from './typeDefs/userTypeDefs.js'
 import { productTypeDefs } from './typeDefs/productTypeDefs.js'
+import { orderTypeDefs } from './typeDefs/orderTypeDefs.js'
 import { productResolvers } from './resolvers/productResolvers.js'
 import jwt from 'jsonwebtoken'
+import { orderResolvers } from './resolvers/orderResolvers.js'
 
 dotenv.config()
 const app = express()
@@ -55,8 +57,12 @@ const startServer = async () => {
   })
 
   const server = new ApolloServer({
-    typeDefs: mergeTypeDefs([userTypeDefs, productTypeDefs]),
-    resolvers: mergeResolvers([userResolvers, productResolvers]),
+    typeDefs: mergeTypeDefs([userTypeDefs, productTypeDefs, orderTypeDefs]),
+    resolvers: mergeResolvers([
+      userResolvers,
+      productResolvers,
+      orderResolvers
+    ]),
     context: ({ req, res }) => {
       const user = req.user || null
       return { user }
