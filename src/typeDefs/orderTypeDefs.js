@@ -1,8 +1,6 @@
 import { gql } from 'apollo-server-core'
 
 export const orderTypeDefs = gql`
-  scalar MyDate
-  scalar MyOrder
   "---all querys here---"
   type Query {
     getAllOrders: [Order]!
@@ -14,9 +12,9 @@ export const orderTypeDefs = gql`
     shippingAddress: String
     totalPrice: Int
     isPaid: Boolean
-    paidAt: MyDate
+    paidAt: String
     isDelivered: Boolean
-    deliveredAt: MyDate
+    deliveredAt: String
   }
 
   type OrderItem {
@@ -44,8 +42,8 @@ export const orderTypeDefs = gql`
       totalPrice: Int!
       isPaid: Boolean
       isDelivered: Boolean
-      paidAt: MyDate
-      deliveredAt: MyDate
+      paidAt: String
+      deliveredAt: String
     ): Order
   }
 `

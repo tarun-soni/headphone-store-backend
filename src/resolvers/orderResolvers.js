@@ -1,6 +1,4 @@
 import { UserInputError } from 'apollo-server-errors'
-import { GraphQLScalarType, Kind } from 'graphql'
-import dayjs from 'dayjs'
 import Order from '../models/Order.js'
 
 export const orderResolvers = {
@@ -9,24 +7,6 @@ export const orderResolvers = {
       return await Order.find()
     }
   },
-
-  MyDate: new GraphQLScalarType({
-    name: 'Date',
-    description: 'Date custom scalar type',
-    serialize(value) {
-      return dayjs(value).format('DD-MM-YYYY')
-    },
-    parseValue(value) {
-      return dayjs(value)
-    },
-    parseLiteral(ast) {
-      if (ast.kind === Kind.STRING) {
-        return dayjs(ast.value)
-      } else {
-        return null
-      }
-    }
-  }),
 
   Mutation: {
     // create a new order from input
@@ -37,11 +17,12 @@ export const orderResolvers = {
         shippingAddress,
         orderItems,
         paidAt,
-        deliveredAt,
         totalPrice,
         isPaid,
         isDelivered
       } = args
+
+      // console.log('args :>> ', args)
 
       if (orderItems && orderItems.length === 0) {
         throw new UserInputError('No order items')
@@ -53,8 +34,8 @@ export const orderResolvers = {
           totalPrice,
           isPaid,
           isDelivered,
-          paidAt: dayjs(paidAt),
-          deliveredAt: dayjs(deliveredAt)
+          paidAt: paidAt,
+          deliveredAt: null
         })
 
         const createdOrder = await order.save()
