@@ -11,7 +11,7 @@ export const orderTypeDefs = gql`
   "used in QUERY getAllOrders for return"
   type AllOrderReturn {
     _id: ID
-    userId: ID
+    userId: UserToReturn!
     orderItems: [OrderItemToReturn!]
     shippingAddress: String
     totalPrice: Int

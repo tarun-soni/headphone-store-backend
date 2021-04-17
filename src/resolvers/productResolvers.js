@@ -17,10 +17,10 @@ export const productResolvers = {
 
       return await Product.findById(args.id)
     },
-    // get top 5 products by rating
+    // get top 4 products by rating
     // everyone
     getTopRatedProducts: async () => {
-      return await Product.find({}).sort({ rating: -1 }).limit(5) //rating -1 coz sort by rating ascending
+      return await Product.find({}).sort({ rating: -1 }).limit(4) //rating -1 coz sort by rating ascending
     }
   },
   // All mutation definations

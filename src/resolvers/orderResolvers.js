@@ -4,7 +4,7 @@ import Order from '../models/Order.js'
 export const orderResolvers = {
   Query: {
     getAllOrders: async () => {
-      return await Order.find()
+      return await Order.find().populate('userId')
     },
 
     getOrderById: async (_, args, context) => {
