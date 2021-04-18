@@ -79,16 +79,24 @@ const startServer = async () => {
   })
 
   const __dirname = path.resolve()
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'public', 'index.html'))
-  })
-  app.listen({ port: PORT }, () => {
-    console.log(`
-    🚀  Server is running!
-    🔉  Listening on port 4000
-    📭  Query at http://localhost:4000${server.graphqlPath}
-  `)
-  })
+
+  // app.listen({ port: PORT }, () => {
+  //   console.log(`
+  //   🚀  Server is running!
+  //   🔉  Listening on port 4000
+  //   📭  Query at http://localhost:4000${server.graphqlPath}
+  // `)
+  // })
+
+  if (process.env.NODE_ENV === 'production') {
+    app.get('*', (req, res) => {
+      res.sendFile(path.resolve(__dirname, 'public', 'index.html'))
+    })
+  } else {
+    app.get('/', (req, res) => {
+      res.send('API running....')
+    })
+  }
 }
 
 startServer()
