@@ -13,8 +13,11 @@ import { orderTypeDefs } from './typeDefs/orderTypeDefs.js'
 import { productResolvers } from './resolvers/productResolvers.js'
 import jwt from 'jsonwebtoken'
 import { orderResolvers } from './resolvers/orderResolvers.js'
-
+import path from 'path'
 dotenv.config()
+
+const PORT = process.env.PORT || 4000
+
 const app = express()
 app.use(cors())
 app.use(
@@ -75,7 +78,11 @@ const startServer = async () => {
     useUnifiedTopology: true
   })
 
-  app.listen({ port: 4000 }, () => {
+  const __dirname = path.resolve()
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'public', 'index.html'))
+  })
+  app.listen({ port: PORT }, () => {
     console.log(`
     🚀  Server is running!
     🔉  Listening on port 4000
